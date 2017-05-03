@@ -11,9 +11,6 @@
     </properties>
 
     <build>
-        <filters>
-            <filter>src/main/environments/${environment}-application.properties</filter>
-        </filters>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -21,13 +18,107 @@
                 <version>${assembly.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>assembly-${environment}</id>
+                        <id>assembly-development</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <finalName>maven-environments-${environment}</finalName>
+                            <skipAssembly>${development.skip}</skipAssembly>
+                            <filters>
+                                <filter>src/main/environments/dev.properties</filter>
+                            </filters>
+                            <finalName>maven-environments-dev</finalName>
+                            <descriptors>
+                                <descriptor>src/main/assembly/distribution.xml</descriptor>
+                            </descriptors>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>assembly-ps</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <skipAssembly>${ps.skip}</skipAssembly>
+                            <filters>
+                                <filter>src/main/environments/ps.properties</filter>
+                            </filters>
+                            <finalName>maven-environments-ps</finalName>
+                            <descriptors>
+                                <descriptor>src/main/assembly/distribution.xml</descriptor>
+                            </descriptors>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>assembly-integ</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <skipAssembly>${integ.skip}</skipAssembly>
+                            <filters>
+                                <filter>src/main/environments/integ.properties</filter>
+                            </filters>
+                            <finalName>maven-environments-integ</finalName>
+                            <descriptors>
+                                <descriptor>src/main/assembly/distribution.xml</descriptor>
+                            </descriptors>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>assembly-certif</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <skipAssembly>${certif.skip}</skipAssembly>
+                            <filters>
+                                <filter>src/main/environments/certif.properties</filter>
+                            </filters>
+                            <finalName>maven-environments-certif</finalName>
+                            <descriptors>
+                                <descriptor>src/main/assembly/distribution.xml</descriptor>
+                            </descriptors>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>assembly-production</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <skipAssembly>${production.skip}</skipAssembly>
+                            <filters>
+                                <filter>src/main/environments/prod.properties</filter>
+                            </filters>
+                            <finalName>maven-environments-prod</finalName>
+                            <descriptors>
+                                <descriptor>src/main/assembly/distribution.xml</descriptor>
+                            </descriptors>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>assembly-production-machine2</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <skipAssembly>${production.skip}</skipAssembly>
+                            <filters>
+                                <filter>src/main/environments/prod-machine2.properties</filter>
+                            </filters>
+                            <finalName>maven-environments-prod-machine2</finalName>
                             <descriptors>
                                 <descriptor>src/main/assembly/distribution.xml</descriptor>
                             </descriptors>
@@ -43,63 +134,58 @@
         <profile>
             <id>dev</id>
             <properties>
-                <environment>dev</environment>
+                <development.skip>false</development.skip>
+                <ps.skip>true</ps.skip>
+                <integ.skip>true</integ.skip>
+                <certif.skip>true</certif.skip>
+                <production.skip>true</production.skip>
             </properties>
         </profile>
         <profile>
             <id>ps</id>
             <properties>
-                <environment>ps</environment>
+                <development.skip>true</development.skip>
+                <ps.skip>false</ps.skip>
+                <integ.skip>true</integ.skip>
+                <certif.skip>true</certif.skip>
+                <production.skip>true</production.skip>
             </properties>
         </profile>
         <profile>
             <id>integ</id>
             <properties>
-                <environment>integ</environment>
+                <development.skip>true</development.skip>
+                <ps.skip>true</ps.skip>
+                <integ.skip>false</integ.skip>
+                <certif.skip>true</certif.skip>
+                <production.skip>true</production.skip>
             </properties>
         </profile>
         <profile>
             <id>certif</id>
             <properties>
-                <environment>certif</environment>
+                <development.skip>true</development.skip>
+                <ps.skip>true</ps.skip>
+                <integ.skip>true</integ.skip>
+                <certif.skip>false</certif.skip>
+                <production.skip>true</production.skip>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
+            <properties>
+                <development.skip>true</development.skip>
+                <ps.skip>true</ps.skip>
+                <integ.skip>true</integ.skip>
+                <certif.skip>true</certif.skip>
+                <production.skip>false</production.skip>
+            </properties>
+        </profile>
+        <profile>
+            <id>all</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <properties>
-                <environment>prod</environment>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <version>${assembly.plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>assembly-${environment}-machine2</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>single</goal>
-                                </goals>
-                                <configuration>
-                                    <filters>
-                                        <filter>src/main/environments/${environment}-machine2-application.properties</filter>
-                                    </filters>
-                                    <finalName>maven-environments-${environment}-machine2</finalName>
-                                    <descriptors>
-                                        <descriptor>src/main/assembly/distribution.xml</descriptor>
-                                    </descriptors>
-                                    <appendAssemblyId>false</appendAssemblyId>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
     </profiles>
 </project>
