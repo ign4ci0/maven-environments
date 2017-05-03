@@ -18,13 +18,13 @@
                 <version>${assembly.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>assembly-development</id>
+                        <id>assembly-dev</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <skipAssembly>${development.skip}</skipAssembly>
+                            <skipAssembly>${dev.skip}</skipAssembly>
                             <filters>
                                 <filter>src/main/environments/dev.properties</filter>
                             </filters>
@@ -90,13 +90,13 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>assembly-production</id>
+                        <id>assembly-prod</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <skipAssembly>${production.skip}</skipAssembly>
+                            <skipAssembly>${prod.skip}</skipAssembly>
                             <filters>
                                 <filter>src/main/environments/prod.properties</filter>
                             </filters>
@@ -108,13 +108,13 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>assembly-production-machine2</id>
+                        <id>assembly-prod-machine2</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <skipAssembly>${production.skip}</skipAssembly>
+                            <skipAssembly>${prod.skip}</skipAssembly>
                             <filters>
                                 <filter>src/main/environments/prod-machine2.properties</filter>
                             </filters>
@@ -134,51 +134,51 @@
         <profile>
             <id>dev</id>
             <properties>
-                <development.skip>false</development.skip>
+                <dev.skip>false</dev.skip>
                 <ps.skip>true</ps.skip>
                 <integ.skip>true</integ.skip>
                 <certif.skip>true</certif.skip>
-                <production.skip>true</production.skip>
+                <prod.skip>true</prod.skip>
             </properties>
         </profile>
         <profile>
             <id>ps</id>
             <properties>
-                <development.skip>true</development.skip>
+                <dev.skip>true</dev.skip>
                 <ps.skip>false</ps.skip>
                 <integ.skip>true</integ.skip>
                 <certif.skip>true</certif.skip>
-                <production.skip>true</production.skip>
+                <prod.skip>true</prod.skip>
             </properties>
         </profile>
         <profile>
             <id>integ</id>
             <properties>
-                <development.skip>true</development.skip>
+                <dev.skip>true</dev.skip>
                 <ps.skip>true</ps.skip>
                 <integ.skip>false</integ.skip>
                 <certif.skip>true</certif.skip>
-                <production.skip>true</production.skip>
+                <prod.skip>true</prod.skip>
             </properties>
         </profile>
         <profile>
             <id>certif</id>
             <properties>
-                <development.skip>true</development.skip>
+                <dev.skip>true</dev.skip>
                 <ps.skip>true</ps.skip>
                 <integ.skip>true</integ.skip>
                 <certif.skip>false</certif.skip>
-                <production.skip>true</production.skip>
+                <prod.skip>true</prod.skip>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
             <properties>
-                <development.skip>true</development.skip>
+                <dev.skip>true</dev.skip>
                 <ps.skip>true</ps.skip>
                 <integ.skip>true</integ.skip>
                 <certif.skip>true</certif.skip>
-                <production.skip>false</production.skip>
+                <prod.skip>false</prod.skip>
             </properties>
         </profile>
         <profile>
